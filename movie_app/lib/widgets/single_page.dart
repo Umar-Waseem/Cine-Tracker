@@ -16,6 +16,7 @@ class SinglePage extends StatefulWidget {
 
 class _SinglePageState extends State<SinglePage> {
   bool favorite = false;
+  bool expand = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,9 +33,20 @@ class _SinglePageState extends State<SinglePage> {
           ),
           Align(
             alignment: Alignment.bottomLeft,
-            child: Container(
-              color: Colors.black54,
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 600),
+              // constraints: const BoxConstraints(maxHeight: 500),
+              height: expand ? 500 : 100,
+              decoration: BoxDecoration(
+                color: Colors.black54,
+                borderRadius: BorderRadius.circular(20),
+              ),
               child: ListTile(
+                onTap: () {
+                  setState(() {
+                    expand = !expand;
+                  });
+                },
                 title: Text(
                   widget.title,
                   style: Theme.of(context).textTheme.headline6,

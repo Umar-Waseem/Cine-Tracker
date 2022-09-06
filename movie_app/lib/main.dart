@@ -12,10 +12,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Movie App',
       theme: ThemeData(
-        appBarTheme: AppBarTheme(
-          backgroundColor: Colors.lightBlueAccent[100],
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.black,
           elevation: 0,
         ),
         colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.red)
