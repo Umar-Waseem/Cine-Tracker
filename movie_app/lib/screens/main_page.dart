@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/screens/home_screen.dart';
-import 'package:movie_app/widgets/single_page.dart';
+import 'package:movie_app/widgets/movie_page.dart';
+
+import '../providers/favorite_movie_provider.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -22,23 +24,35 @@ class _MainPageState extends State<MainPage> {
     return PageView(
       scrollDirection: Axis.vertical,
       controller: controller,
-      children: const [
-        HomeScreen(),
-        SinglePage(
-          title: "Movie 1",
-          color: Colors.red,
-          image: "assets/images/avengers.jpg",
+      children: [
+        const HomeScreen(),
+        MoviePage(
+          movie: Movie(
+            title: "Avengers: Endgame",
+            description: "Fantasy",
+            genre: "Drama",
+            image: "assets/images/avengers.jpg",
+            isFav: false,
+          ),
         ),
-        SinglePage(
-          title: "Movie 2",
-          color: Colors.red,
-          image: "assets/images/uncharted.jpg",
+        MoviePage(
+          movie: Movie(
+            title: "Uncharted",
+            description: "Description",
+            genre: "Thriller",
+            image: "assets/images/uncharted.jpg",
+            isFav: false,
+          ),
         ),
-        SinglePage(
-          title: "Movie 3",
-          color: Colors.red,
-          image: "assets/images/avengers.jpg",
-        ),
+        MoviePage(
+          movie: Movie(
+            title: "Shawshank Redemption",
+            description: "Description",
+            genre: "Drama",
+            image: "assets/images/shawshank.jpg",
+            isFav: false,
+          ),
+        )
       ],
     );
   }
