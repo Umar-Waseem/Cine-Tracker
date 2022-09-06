@@ -48,7 +48,7 @@ class _MoviePageState extends State<MoviePage>
                       });
                     },
                     title: Text(
-                      widget.movie.title,
+                      "${widget.movie.title} - ${widget.movie.year}",
                       style: Theme.of(context).textTheme.headline6,
                     ),
                     subtitle: Text(

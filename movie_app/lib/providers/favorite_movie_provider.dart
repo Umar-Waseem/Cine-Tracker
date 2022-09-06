@@ -8,6 +8,7 @@ class Movie {
   final String description;
   final String genre;
   final String image;
+  final String year;
   bool isFav;
 
   Movie({
@@ -16,6 +17,7 @@ class Movie {
     required this.genre,
     required this.image,
     required this.isFav,
+    required this.year, 
   });
 }
 

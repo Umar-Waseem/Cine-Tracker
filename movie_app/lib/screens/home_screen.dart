@@ -22,7 +22,7 @@ class HomeScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    const Icon(Icons.arrow_left),
+                    const Icon(Icons.arrow_left, color: Colors.white),
                     Text(
                       "Swipe left to list already watched movies",
                       style: Theme.of(context).textTheme.bodyText2,
@@ -36,7 +36,7 @@ class HomeScreen extends StatelessWidget {
                       "Swipe right to list favorite movies",
                       style: Theme.of(context).textTheme.bodyText2,
                     ),
-                    const Icon(Icons.arrow_right),
+                    const Icon(Icons.arrow_right, color: Colors.white),
                   ],
                 ),
                 Container(
@@ -45,10 +45,10 @@ class HomeScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Swipe down to see more movies",
+                        "Swipe down to see movies you added",
                         style: Theme.of(context).textTheme.bodyText2,
                       ),
-                      const Icon(Icons.arrow_drop_down),
+                      const Icon(Icons.arrow_drop_down, color: Colors.white),
                     ],
                   ),
                 ),

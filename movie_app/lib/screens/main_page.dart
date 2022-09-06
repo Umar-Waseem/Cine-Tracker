@@ -33,6 +33,7 @@ class _MainPageState extends State<MainPage> {
             genre: "Drama",
             image: "assets/images/avengers.jpg",
             isFav: false,
+            year: "2019",
           ),
         ),
         MoviePage(
@@ -42,6 +43,7 @@ class _MainPageState extends State<MainPage> {
             genre: "Thriller",
             image: "assets/images/uncharted.jpg",
             isFav: false,
+            year: "2021",
           ),
         ),
         MoviePage(
@@ -51,6 +53,7 @@ class _MainPageState extends State<MainPage> {
             genre: "Drama",
             image: "assets/images/shawshank.jpg",
             isFav: false,
+            year: "1994",
           ),
         )
       ],
