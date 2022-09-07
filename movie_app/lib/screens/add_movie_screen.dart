@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../models/movie.dart';
+
 class AddMovieScreen extends StatefulWidget {
   const AddMovieScreen({super.key});
 
@@ -15,6 +17,8 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
 
   bool loading = false;
   bool loading1 = false;
+
+  Movie? movie;
 
   void sendApiRequestByTitle(String text) async {
     setState(() {
@@ -31,7 +35,12 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
       });
       return value;
     });
-    print(response.body);
+    // print(response.body);
+
+    // make movie model from response
+
+    movie = Movie.fromJson(response.body);
+    print("movie$movie");
   }
 
   void sendApiRequestById(String text) async {
@@ -49,7 +58,6 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
       });
       return value;
     });
-    print(response.body);
   }
 
   @override
@@ -100,6 +108,12 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
                     ? const CircularProgressIndicator()
                     : const Text("Search"),
               ),
+              if (movie != null)
+                ListTile(
+                  title: Text(movie!.title),
+                  subtitle: Text(movie!.year),
+                  leading: Image.network(movie!.image),
+                ),
             ],
           ),
         ),
