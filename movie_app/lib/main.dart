@@ -4,6 +4,8 @@ import 'package:movie_app/providers/favorite_movie_provider.dart';
 import 'package:movie_app/screens/main_page.dart';
 import 'package:provider/provider.dart';
 
+import 'providers/watched_movies_provider.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -22,10 +24,39 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => AllMoviesProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => WatchedMoviesProvider(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Movie App',
+        darkTheme: ThemeData(
+          textTheme: const TextTheme(
+            headline1: TextStyle(
+              fontSize: 72.0,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+            headline6: TextStyle(
+              fontSize: 36.0,
+              fontStyle: FontStyle.italic,
+              color: Colors.white,
+            ),
+            bodyText2: TextStyle(
+              fontSize: 14.0,
+              fontFamily: 'Hind',
+              color: Colors.white,
+            ),
+          ),
+          appBarTheme: const AppBarTheme(
+            foregroundColor: Colors.white,
+            backgroundColor: Colors.black,
+          ),
+          colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.grey)
+              .copyWith(secondary: Colors.black, brightness: Brightness.dark),
+        ),
+        themeMode: ThemeMode.dark,
         theme: ThemeData(
           appBarTheme: const AppBarTheme(
             backgroundColor: Colors.black,
@@ -35,13 +66,15 @@ class MyApp extends StatelessWidget {
               .copyWith(secondary: Colors.yellow),
           textTheme: const TextTheme(
             headline1: TextStyle(
-                fontSize: 72.0,
-                fontWeight: FontWeight.bold,
-                color: Colors.white),
+              fontSize: 72.0,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
             headline6: TextStyle(
-                fontSize: 36.0,
-                fontStyle: FontStyle.italic,
-                color: Colors.white),
+              fontSize: 36.0,
+              fontStyle: FontStyle.italic,
+              color: Colors.white,
+            ),
             bodyText2: TextStyle(
               fontSize: 14.0,
               fontFamily: 'Hind',
@@ -54,3 +87,15 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+
+
+// String apiKey = "25cef5e";
+
+// void sendApiRequest() async {
+//   String searchResult = searchController.text;
+
+//   final response = await http.get(
+//       Uri.parse("https://www.omdbapi.com/?t=$searchResult&apikey=$apiKey"));
+//   print(response.body);
+// }

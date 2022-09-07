@@ -11,15 +11,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   TextEditingController searchController = TextEditingController();
 
-  String apiKey = "25cef5e";
-
-  void sendApiRequest() async {
-    String searchResult = searchController.text;
-
-    final response = await http.get(
-        Uri.parse("https://www.omdbapi.com/?t=$searchResult&apikey=$apiKey"));
-    print(response.body);
-  }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +30,6 @@ class _HomeScreenState extends State<HomeScreen> {
           actions: [
             IconButton(
               onPressed: () {
-                sendApiRequest();
               },
               icon: const Icon(Icons.search),
             ),

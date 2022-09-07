@@ -7,8 +7,8 @@ class AllMoviesProvider extends ChangeNotifier {
   final List<Movie> _allMovies = [
     Movie(
       title: "Avengers: Endgame",
-      description: "Fantasy",
-      genre: "Drama",
+      description: "Description",
+      genre: "Fantasy",
       image: "assets/images/avengers.jpg",
       isFav: false,
       year: "2019",

@@ -19,6 +19,10 @@ class FavoriteMovieProvider extends ChangeNotifier {
         .toList();
   }
 
+  List<Movie> get favoriteMovies {
+    return _favoriteMovies;
+  }
+
   void addMovie(Movie movie) {
     _favoriteMovies.add(movie);
     notifyListeners();

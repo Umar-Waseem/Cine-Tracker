@@ -23,16 +23,7 @@ class _MoviePageState extends State<MoviePage>
     return SafeArea(
       child: Scaffold(
         // go to favorite movies page,
-        appBar: AppBar(
-          actions: [
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.wallet_giftcard_rounded,
-              ),
-            )
-          ],
-        ),
+        appBar: AppBar(),
         body: Consumer<FavoriteMovieProvider>(
           builder: (context, data, child) => Stack(
             children: [

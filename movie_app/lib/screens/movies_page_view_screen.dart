@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-class PageViewScreen extends StatefulWidget {
-  const PageViewScreen(
+class MoviePageViewScreen extends StatefulWidget {
+  const MoviePageViewScreen(
       {super.key, required this.children, required this.initalIndex});
   final List<Widget> children;
   final int initalIndex;
 
   @override
-  State<PageViewScreen> createState() => _PageViewScreenState();
+  State<MoviePageViewScreen> createState() => _MoviePageViewScreenState();
 }
 
-class _PageViewScreenState extends State<PageViewScreen> {
+class _MoviePageViewScreenState extends State<MoviePageViewScreen> {
   late PageController controller;
   @override
   void initState() {
@@ -33,6 +33,7 @@ class _PageViewScreenState extends State<PageViewScreen> {
         itemCount: widget.children.length,
         itemBuilder: (context, index) {
           return Hero(
+            
             tag: index,
             child: widget.children[index],
           );
