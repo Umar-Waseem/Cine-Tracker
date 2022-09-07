@@ -1,14 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  TextEditingController searchController = TextEditingController();
+
+  String apiKey = "25cef5e";
+
+  void sendApiRequest() async {
+    String searchResult = searchController.text;
+
+    final response = await http.get(
+        Uri.parse("https://www.omdbapi.com/?t=$searchResult&apikey=$apiKey"));
+    print(response.body);
+  }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.black,
-        appBar: AppBar(),
+        appBar: AppBar(
+          title: TextField(
+            style: const TextStyle(color: Colors.white),
+            decoration: const InputDecoration(
+              hintText: "Search Movie",
+              hintStyle: TextStyle(color: Colors.white),
+            ),
+            controller: searchController,
+          ),
+          actions: [
+            IconButton(
+              onPressed: () {
+                sendApiRequest();
+              },
+              icon: const Icon(Icons.search),
+            ),
+          ],
+        ),
         body: SingleChildScrollView(
           child: Container(
             margin: const EdgeInsets.all(15),

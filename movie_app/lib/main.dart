@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/providers/all_movies_provider.dart';
 import 'package:movie_app/providers/favorite_movie_provider.dart';
 import 'package:movie_app/screens/main_page.dart';
 import 'package:provider/provider.dart';
@@ -17,6 +18,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (context) => FavoriteMovieProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => AllMoviesProvider(),
         ),
       ],
       child: MaterialApp(

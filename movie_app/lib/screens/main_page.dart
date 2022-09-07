@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/screens/home_screen.dart';
-import 'package:movie_app/widgets/movie_page.dart';
+import 'package:provider/provider.dart';
 
+import '../models/movie.dart';
+import '../providers/all_movies_provider.dart';
 import '../providers/favorite_movie_provider.dart';
+import 'page_view_screen.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -12,51 +14,54 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  final controller = PageController(initialPage: 0);
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
-    return PageView(
-      scrollDirection: Axis.vertical,
-      controller: controller,
-      children: [
-        const HomeScreen(),
-        MoviePage(
-          movie: Movie(
-            title: "Avengers: Endgame",
-            description: "Fantasy",
-            genre: "Drama",
-            image: "assets/images/avengers.jpg",
-            isFav: false,
-            year: "2019",
-          ),
+    final allMoviesData = Provider.of<AllMoviesProvider>(context);
+    final favMoviesData = Provider.of<FavoriteMovieProvider>(context);
+    return Scaffold(
+      body: ListView.separated(
+        separatorBuilder: (context, index) => const Divider(
+          color: Colors.white,
+          thickness: 1,
         ),
-        MoviePage(
-          movie: Movie(
-            title: "Uncharted",
-            description: "Description",
-            genre: "Thriller",
-            image: "assets/images/uncharted.jpg",
-            isFav: false,
-            year: "2021",
-          ),
-        ),
-        MoviePage(
-          movie: Movie(
-            title: "Shawshank Redemption",
-            description: "Description",
-            genre: "Drama",
-            image: "assets/images/shawshank.jpg",
-            isFav: false,
-            year: "1994",
-          ),
-        )
-      ],
+        itemCount: allMoviesData.allMoviePagesList.length,
+        itemBuilder: (context, index) {
+          Movie currentMovie = allMoviesData.allMovies[index];
+          return ListTile(
+            leading: Hero(
+              tag: index,
+              child: Image.asset(
+                currentMovie.image,
+                height: 100,
+                width: 100,
+              ),
+            ),
+            title: Text(currentMovie.title),
+            subtitle: Text(currentMovie.description),
+            trailing: IconButton(
+              onPressed: () {
+                favMoviesData.toggleFavorite(currentMovie);
+              },
+              icon: Icon(
+                currentMovie.isFav
+                    ? Icons.favorite_outlined
+                    : Icons.favorite_border,
+                color: Colors.red,
+              ),
+            ),
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => PageViewScreen(
+                    initalIndex: index,
+                    children: allMoviesData.allMoviePagesList,
+                  ),
+                ),
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }

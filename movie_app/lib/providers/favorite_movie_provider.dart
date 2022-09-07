@@ -1,30 +1,23 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
+import '../models/movie.dart';
 import '../widgets/movie_page.dart';
 
-class Movie {
-  final String title;
-  final String description;
-  final String genre;
-  final String image;
-  final String year;
-  bool isFav;
-
-  Movie({
-    required this.title,
-    required this.description,
-    required this.genre,
-    required this.image,
-    required this.isFav,
-    required this.year, 
-  });
-}
+// import '../widgets/movie_page.dart';
 
 class FavoriteMovieProvider extends ChangeNotifier {
-  List<Movie> _favoriteMovies = [];
+  final List<Movie> _favoriteMovies = [];
 
-  List<Movie> get favoriteMovies => _favoriteMovies;
+  List<MoviePage> get favoriteMoviePages {
+    return _favoriteMovies
+        .map(
+          (movie) => MoviePage(
+            movie: movie,
+          ),
+        )
+        .toList();
+  }
 
   void addMovie(Movie movie) {
     _favoriteMovies.add(movie);

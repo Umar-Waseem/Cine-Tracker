@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../models/movie.dart';
 import '../providers/favorite_movie_provider.dart';
 
 class MoviePage extends StatefulWidget {
@@ -21,6 +22,17 @@ class _MoviePageState extends State<MoviePage>
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        // go to favorite movies page,
+        appBar: AppBar(
+          actions: [
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.wallet_giftcard_rounded,
+              ),
+            )
+          ],
+        ),
         body: Consumer<FavoriteMovieProvider>(
           builder: (context, data, child) => Stack(
             children: [
