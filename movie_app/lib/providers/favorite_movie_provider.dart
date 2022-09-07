@@ -23,6 +23,11 @@ class FavoriteMovieProvider extends ChangeNotifier {
     return _favoriteMovies;
   }
 
+  // get by genre
+  List<Movie> getMoviesByGenre(String genre) {
+    return _favoriteMovies.where((movie) => movie.genre == genre).toList();
+  }
+
   void addMovie(Movie movie) {
     _favoriteMovies.add(movie);
     notifyListeners();

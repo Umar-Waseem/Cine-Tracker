@@ -18,6 +18,11 @@ class WatchedMoviesProvider with ChangeNotifier {
         .toList();
   }
 
+  // get by genre
+  List<Movie> getMoviesByGenre(String genre) {
+    return _watchedMovies.where((movie) => movie.genre == genre).toList();
+  }
+
   void addMovie(Movie movie) {
     _watchedMovies.add(movie);
     notifyListeners();
@@ -25,6 +30,17 @@ class WatchedMoviesProvider with ChangeNotifier {
 
   void removeMovie(Movie movie) {
     _watchedMovies.remove(movie);
+    notifyListeners();
+  }
+
+  void toggleWatched(Movie movie) {
+    if (_watchedMovies.contains(movie)) {
+      movie.isWatched = false;
+      removeMovie(movie);
+    } else {
+      movie.isWatched = true;
+      addMovie(movie);
+    }
     notifyListeners();
   }
 }

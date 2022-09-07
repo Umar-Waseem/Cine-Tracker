@@ -12,6 +12,7 @@ class AllMoviesProvider extends ChangeNotifier {
       image: "assets/images/avengers.jpg",
       isFav: false,
       year: "2019",
+      isWatched: false,
     ),
     Movie(
       title: "Uncharted",
@@ -20,6 +21,7 @@ class AllMoviesProvider extends ChangeNotifier {
       image: "assets/images/uncharted.jpg",
       isFav: false,
       year: "2021",
+      isWatched: false,
     ),
     Movie(
       title: "Shawshank Redemption",
@@ -28,8 +30,14 @@ class AllMoviesProvider extends ChangeNotifier {
       image: "assets/images/shawshank.jpg",
       isFav: false,
       year: "1994",
+      isWatched: false,
     ),
   ];
+
+  // get by genre
+  List<Movie> getMoviesByGenre(String genre) {
+    return _allMovies.where((movie) => movie.genre == genre).toList();
+  }
 
   List<Movie> get allMovies {
     return _allMovies;
@@ -43,5 +51,15 @@ class AllMoviesProvider extends ChangeNotifier {
           ),
         )
         .toList();
+  }
+
+  void addMovie(Movie movie) {
+    _allMovies.add(movie);
+    notifyListeners();
+  }
+
+  void removeMovie(Movie movie) {
+    _allMovies.remove(movie);
+    notifyListeners();
   }
 }

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../providers/all_movies_provider.dart';
 import '../providers/favorite_movie_provider.dart';
 import '../providers/watched_movies_provider.dart';
+import 'add_movie_screen.dart';
 import 'all_movies_list_view_screen.dart';
 import 'fav_movies_list_view_screen.dart';
 import 'watched_movies_list_view_screen.dart';
@@ -23,7 +24,6 @@ class _MainPageState extends State<MainPage> {
     final favMoviesData = Provider.of<FavoriteMovieProvider>(context);
     final watchedMoviesData = Provider.of<WatchedMoviesProvider>(context);
     return Scaffold(
-      
       backgroundColor: Colors.black,
       body: PageView(
         scrollDirection: Axis.horizontal,
@@ -34,6 +34,7 @@ class _MainPageState extends State<MainPage> {
             favMoviesData: favMoviesData,
           ),
           AllMoviesListViewScreen(
+            watchedMoviesData: watchedMoviesData,
             allMoviesData: allMoviesData,
             favMoviesData: favMoviesData,
           ),
@@ -41,6 +42,16 @@ class _MainPageState extends State<MainPage> {
             favMoviesData: favMoviesData,
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => const AddMovieScreen(),
+            ),
+          );
+        },
+        child: const Icon(Icons.add, color: Colors.white),
       ),
     );
   }
