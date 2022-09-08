@@ -5,9 +5,10 @@ import '../models/movie.dart';
 import '../providers/all_movies_provider.dart';
 import '../providers/favorite_movie_provider.dart';
 import '../providers/watched_movies_provider.dart';
+import 'add_movie_screen.dart';
 import 'movies_page_view_screen.dart';
 
-class AllMoviesListViewScreen extends StatelessWidget {
+class AllMoviesListViewScreen extends StatefulWidget {
   const AllMoviesListViewScreen({
     Key? key,
     required this.allMoviesData,
@@ -20,21 +21,40 @@ class AllMoviesListViewScreen extends StatelessWidget {
   final WatchedMoviesProvider watchedMoviesData;
 
   @override
+  State<AllMoviesListViewScreen> createState() =>
+      _AllMoviesListViewScreenState();
+}
+
+class _AllMoviesListViewScreenState extends State<AllMoviesListViewScreen> {
+  bool selected = false;
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Movies To Watch'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const AddMovieScreen(),
+                ),
+              );
+            },
+            icon: const Icon(Icons.add, color: Colors.white),
+          )
+        ],
       ),
       body: ListView.separated(
         separatorBuilder: (context, index) => const Divider(
           indent: 15,
           endIndent: 15,
-          color: Colors.red,
-          thickness: 0.5,
+          color: Colors.grey,
+          thickness: 1,
         ),
-        itemCount: allMoviesData.allMoviePagesList.length,
+        itemCount: widget.allMoviesData.allMoviePagesList.length,
         itemBuilder: (context, index) {
-          Movie currentMovie = allMoviesData.allMovies[index];
+          Movie currentMovie = widget.allMoviesData.allMovies[index];
           return Dismissible(
             dismissThresholds: const {
               DismissDirection.endToStart: 0.8,
@@ -52,7 +72,7 @@ class AllMoviesListViewScreen extends StatelessWidget {
             onDismissed: (direction) {
               // on left direction
               if (direction == DismissDirection.endToStart) {
-                allMoviesData.removeMovie(currentMovie);
+                widget.allMoviesData.removeMovie(currentMovie);
               }
             },
             key: UniqueKey(),
@@ -76,7 +96,7 @@ class AllMoviesListViewScreen extends StatelessWidget {
                 children: [
                   IconButton(
                     onPressed: () {
-                      favMoviesData.toggleFavorite(currentMovie);
+                      widget.favMoviesData.toggleFavorite(currentMovie);
                     },
                     icon: Icon(
                       currentMovie.isFav
@@ -87,7 +107,7 @@ class AllMoviesListViewScreen extends StatelessWidget {
                   ),
                   IconButton(
                     onPressed: () {
-                      watchedMoviesData.toggleWatched(currentMovie);
+                      widget.watchedMoviesData.toggleWatched(currentMovie);
                     },
                     icon: Icon(
                       currentMovie.isWatched
@@ -103,7 +123,7 @@ class AllMoviesListViewScreen extends StatelessWidget {
                   MaterialPageRoute(
                     builder: (context) => MoviePageViewScreen(
                       initalIndex: index,
-                      children: allMoviesData.allMoviePagesList,
+                      children: widget.allMoviesData.allMoviePagesList,
                     ),
                   ),
                 );
@@ -111,6 +131,62 @@ class AllMoviesListViewScreen extends StatelessWidget {
             ),
           );
         },
+      ),
+      bottomSheet: Container(
+        height: 70,
+        color: Colors.grey,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            InkWell(
+              onTap: () {
+                setState(() {
+                  selected = !selected;
+                });
+              },
+              child: Chip(
+                elevation: selected ? 0 : 10,
+                label: const Text(
+                  "Drama",
+                  style: TextStyle(color: Colors.white),
+                ),
+                backgroundColor: selected ? Colors.red : Colors.black,
+              ),
+            ),
+            const Chip(
+              elevation: 10,
+              label: Text(
+                "Thriller",
+                style: TextStyle(color: Colors.white),
+              ),
+              backgroundColor: Colors.black,
+            ),
+            const Chip(
+              elevation: 0,
+              label: Text(
+                "Action",
+                style: TextStyle(color: Colors.white),
+              ),
+              backgroundColor: Colors.black,
+            ),
+            const Chip(
+              elevation: 10,
+              label: Text(
+                "Comedy",
+                style: TextStyle(color: Colors.white),
+              ),
+              backgroundColor: Colors.black,
+            ),
+            const Chip(
+              elevation: 10,
+              label: Text(
+                "Horror",
+                style: TextStyle(color: Colors.white),
+              ),
+              backgroundColor: Colors.black,
+            ),
+          ],
+        ),
       ),
     );
   }

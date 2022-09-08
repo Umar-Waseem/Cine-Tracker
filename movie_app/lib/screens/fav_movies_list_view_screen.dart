@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../models/movie.dart';
 import '../providers/favorite_movie_provider.dart';
+import 'add_movie_screen.dart';
 import 'movies_page_view_screen.dart';
 
 class FavroiteMoviesListViewScreen extends StatelessWidget {
@@ -20,6 +21,18 @@ class FavroiteMoviesListViewScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Favorite Movies'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const AddMovieScreen(),
+                ),
+              );
+            },
+            icon: const Icon(Icons.add, color: Colors.white),
+          )
+        ],
       ),
       body: ListView.separated(
         separatorBuilder: (context, index) => const Divider(

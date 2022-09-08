@@ -24,6 +24,7 @@ class _MainPageState extends State<MainPage> {
     final favMoviesData = Provider.of<FavoriteMovieProvider>(context);
     final watchedMoviesData = Provider.of<WatchedMoviesProvider>(context);
     return Scaffold(
+      
       backgroundColor: Colors.black,
       body: PageView(
         scrollDirection: Axis.horizontal,
@@ -42,16 +43,6 @@ class _MainPageState extends State<MainPage> {
             favMoviesData: favMoviesData,
           ),
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => const AddMovieScreen(),
-            ),
-          );
-        },
-        child: const Icon(Icons.add, color: Colors.white),
       ),
     );
   }
