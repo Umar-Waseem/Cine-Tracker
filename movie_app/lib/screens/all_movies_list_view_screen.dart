@@ -51,6 +51,7 @@ class _AllMoviesListViewScreenState extends State<AllMoviesListViewScreen> {
           endIndent: 15,
           color: Colors.grey,
           thickness: 1,
+          height: 5,
         ),
         itemCount: widget.allMoviesData.allMoviePagesList.length,
         itemBuilder: (context, index) {
@@ -61,7 +62,7 @@ class _AllMoviesListViewScreenState extends State<AllMoviesListViewScreen> {
             },
             direction: DismissDirection.endToStart,
             background: Container(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(10),
               alignment: Alignment.centerRight,
               color: Colors.red,
               child: const Icon(
@@ -77,6 +78,9 @@ class _AllMoviesListViewScreenState extends State<AllMoviesListViewScreen> {
             },
             key: UniqueKey(),
             child: ListTile(
+              onLongPress: () {
+                widget.watchedMoviesData.toggleWatched(currentMovie);
+              },
               leading: Hero(
                 tag: index,
                 child: CachedNetworkImage(
