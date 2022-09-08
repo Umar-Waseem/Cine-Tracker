@@ -30,7 +30,7 @@ class _MoviePageState extends State<MoviePage>
               Container(
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage(widget.movie.image),
+                    image: NetworkImage(widget.movie.image),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -56,7 +56,11 @@ class _MoviePageState extends State<MoviePage>
                     ),
                     subtitle: Text(
                       widget.movie.description,
-                      style: Theme.of(context).textTheme.bodyText2,
+                      style: const TextStyle(
+                        height: 1.5,
+                        color: Colors.white,
+                        fontSize: 16,
+                      ),
                     ),
                     trailing: IconButton(
                       onPressed: () {

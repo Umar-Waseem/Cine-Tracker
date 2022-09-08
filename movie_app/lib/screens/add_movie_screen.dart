@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:movie_app/widgets/movie_page.dart';
+import 'package:provider/provider.dart';
 
 import '../models/movie.dart';
+import '../providers/all_movies_provider.dart';
+import 'movies_page_view_screen.dart';
 
 class AddMovieScreen extends StatefulWidget {
   const AddMovieScreen({super.key});
@@ -21,44 +25,55 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
   Movie? movie;
 
   void sendApiRequestByTitle(String text) async {
-    setState(() {
-      loading = true;
-    });
-    String searchResult = text;
-    final response = await http
-        .get(
-      Uri.parse("https://www.omdbapi.com/?t=$searchResult&apikey=$apiKey"),
-    )
-        .then((value) {
+    try {
       setState(() {
-        loading = false;
+        loading = true;
       });
-      return value;
-    });
-    // print(response.body);
+      String searchResult = text;
+      final response = await http
+          .get(
+        Uri.parse("https://www.omdbapi.com/?t=$searchResult&apikey=$apiKey"),
+      )
+          .then((value) {
+        setState(() {
+          loading = false;
+        });
+        return value;
+      });
+      // print(response.body);
 
-    // make movie model from response
-
-    movie = Movie.fromJson(response.body);
-    print("movie$movie");
+      // make movie model from response
+      movie = Movie.fromJson(response.body);
+      print("movie$movie");
+    } catch (e) {
+      // show snackbar
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            e.toString(),
+            style: const TextStyle(color: Colors.white),
+          ),
+        ),
+      );
+    }
   }
 
-  void sendApiRequestById(String text) async {
-    setState(() {
-      loading1 = true;
-    });
-    String searchResult = text;
-    final response = await http
-        .get(
-      Uri.parse("https://www.omdbapi.com/?i=$searchResult&apikey=$apiKey"),
-    )
-        .then((value) {
-      setState(() {
-        loading1 = false;
-      });
-      return value;
-    });
-  }
+  // void sendApiRequestById(String text) async {
+  //   setState(() {
+  //     loading1 = true;
+  //   });
+  //   String searchResult = text;
+  //   final response = await http
+  //       .get(
+  //     Uri.parse("https://www.omdbapi.com/?i=$searchResult&apikey=$apiKey"),
+  //   )
+  //       .then((value) {
+  //     setState(() {
+  //       loading1 = false;
+  //     });
+  //     return value;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -85,34 +100,55 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
                     ? const CircularProgressIndicator(color: Colors.white)
                     : const Text("Search"),
               ),
-              const SizedBox(height: 20),
-              SizedBox(
-                height: 40,
-                child: Text(
-                  "OR",
-                  style: Theme.of(context).textTheme.headline6,
-                ),
-              ),
-              TextField(
-                controller: idController,
-                decoration: const InputDecoration(
-                  hintText: "By IMDB ID",
-                ),
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  sendApiRequestById(idController.text);
-                },
-                child: loading1
-                    ? const CircularProgressIndicator()
-                    : const Text("Search"),
-              ),
+              // const SizedBox(height: 20),
+              // SizedBox(
+              //   height: 40,
+              //   child: Text(
+              //     "OR",
+              //     style: Theme.of(context).textTheme.headline6,
+              //   ),
+              // ),
+              // TextField(
+              //   controller: idController,
+              //   decoration: const InputDecoration(
+              //     hintText: "By IMDB ID",
+              //   ),
+              // ),
+              // const SizedBox(height: 20),
+              // ElevatedButton(
+              //   onPressed: () {
+              //     sendApiRequestById(idController.text);
+              //   },
+              //   child: loading1
+              //       ? const CircularProgressIndicator()
+              //       : const Text("Search"),
+              // ),
               if (movie != null)
-                ListTile(
-                  title: Text(movie!.title),
-                  subtitle: Text(movie!.year),
-                  leading: Image.network(movie!.image),
+                Consumer<AllMoviesProvider>(
+                  builder: (context, data, child) => ListTile(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => MoviePageViewScreen(
+                            initalIndex: 0,
+                            children: [
+                              MoviePage(movie: movie!),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                    title: Text(movie!.title),
+                    subtitle: Text(movie!.year),
+                    leading: Image.network(movie!.image),
+                    trailing: IconButton(
+                      onPressed: () {
+                        data.addMovie(movie!);
+                        Navigator.of(context).pop();
+                      },
+                      icon: const Icon(Icons.add),
+                    ),
+                  ),
                 ),
             ],
           ),

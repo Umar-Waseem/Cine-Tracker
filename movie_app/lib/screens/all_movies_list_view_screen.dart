@@ -22,7 +22,7 @@ class AllMoviesListViewScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('All Movies'),
+        title: const Text('Movies To Watch'),
       ),
       body: ListView.separated(
         separatorBuilder: (context, index) => const Divider(
@@ -56,7 +56,7 @@ class AllMoviesListViewScreen extends StatelessWidget {
             child: ListTile(
               leading: Hero(
                 tag: index,
-                child: Image.asset(
+                child: Image.network(
                   currentMovie.image,
                   height: 100,
                   width: 100,
@@ -66,7 +66,7 @@ class AllMoviesListViewScreen extends StatelessWidget {
                 currentMovie.title,
               ),
               subtitle: Text(
-                currentMovie.description,
+                currentMovie.genre,
               ),
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,

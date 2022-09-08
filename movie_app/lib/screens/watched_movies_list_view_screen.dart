@@ -47,14 +47,14 @@ class WatchedMoviesListViewScreen extends StatelessWidget {
             child: ListTile(
               leading: Hero(
                 tag: index,
-                child: Image.asset(
+                child: Image.network(
                   currentMovie.image,
                   height: 100,
                   width: 100,
                 ),
               ),
               title: Text(currentMovie.title),
-              subtitle: Text(currentMovie.description),
+              subtitle: Text(currentMovie.genre),
               trailing: IconButton(
                 onPressed: () {
                   favMoviesData.toggleFavorite(currentMovie);

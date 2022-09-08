@@ -9,7 +9,8 @@ class AllMoviesProvider extends ChangeNotifier {
       title: "Avengers: Endgame",
       description: "Description",
       genre: "Fantasy",
-      image: "assets/images/avengers.jpg",
+      image:
+          "https://lumiere-a.akamaihd.net/v1/images/p_avengersendgame_19751_e14a0104.jpeg?region=0%2C0%2C540%2C810",
       isFav: false,
       year: "2019",
       isWatched: false,
@@ -18,7 +19,8 @@ class AllMoviesProvider extends ChangeNotifier {
       title: "Uncharted",
       description: "Description",
       genre: "Thriller",
-      image: "assets/images/uncharted.jpg",
+      image:
+          "https://m.media-amazon.com/images/M/MV5BMWEwNjhkYzYtNjgzYy00YTY2LThjYWYtYzViMGJkZTI4Y2MyXkEyXkFqcGdeQXVyNTM0OTY1OQ@@._V1_FMjpg_UX1000_.jpg",
       isFav: false,
       year: "2021",
       isWatched: false,
@@ -27,7 +29,7 @@ class AllMoviesProvider extends ChangeNotifier {
       title: "Shawshank Redemption",
       description: "Description",
       genre: "Drama",
-      image: "assets/images/shawshank.jpg",
+      image: "https://m.media-amazon.com/images/I/71TO64qm+bL._AC_SL1099_.jpg",
       isFav: false,
       year: "1994",
       isWatched: false,
