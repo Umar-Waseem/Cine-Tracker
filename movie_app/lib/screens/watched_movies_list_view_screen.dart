@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../models/movie.dart';
@@ -47,10 +48,10 @@ class WatchedMoviesListViewScreen extends StatelessWidget {
             child: ListTile(
               leading: Hero(
                 tag: index,
-                child: Image.network(
-                  currentMovie.image,
-                  height: 100,
-                  width: 100,
+                child: CachedNetworkImage(
+                  imageUrl: currentMovie.image,
+                  placeholder: (context, url) => const CircleAvatar(),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
               ),
               title: Text(currentMovie.title),
