@@ -23,15 +23,19 @@ class RatingBar extends StatelessWidget {
         children: [
           Chip(
             label: Text("Rating: ${currentMovie.imdbRating}"),
-            backgroundColor: Colors.red,
+            backgroundColor: Colors.black,
           ),
           Chip(
             label: Text("Duration: ${currentMovie.runtime} "),
-            backgroundColor: Colors.red,
+            backgroundColor: Colors.black,
           ),
           Chip(
             label: Text("Actors: ${currentMovie.actors} "),
-            backgroundColor: Colors.red,
+            backgroundColor: Colors.black,
+          ),
+          Chip(
+            label: Text("Director: ${currentMovie.director} "),
+            backgroundColor: Colors.black,
           ),
         ],
       ),

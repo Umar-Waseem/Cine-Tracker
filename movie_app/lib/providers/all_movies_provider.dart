@@ -199,11 +199,16 @@ class AllMoviesProvider extends ChangeNotifier {
 
   // by runtime where query <= runtime
   List<Movie> searchMoviesByRuntime(String query) {
-    return _allMovies
-        .where(
-          (movie) => double.parse(movie.runtime) <= double.parse(query),
-        )
-        .toList();
+    double value = double.parse(query);
+    return _allMovies.where(
+      (movie) {
+        log(value.toString());
+        log(movie.runtime);
+        double time = double.parse(movie.runtime.split(" ")[0]);
+        // if value is within 30 of time, return true
+        return value - 30 <= time && value + 30 >= time;
+      },
+    ).toList();
   }
 
   // by cast
