@@ -6,15 +6,15 @@ class Movie {
   final String genre;
   final String image;
   final String year;
-  String? released;
-  String? runtime;
-  String? director;
-  String? writer;
-  String? actors;
-  String? language;
-  String? country;
-  String? awards;
-  String? imdbRating;
+  final String released;
+  final String runtime;
+  final String director;
+  final String writer;
+  final String actors;
+  final String language;
+  final String country;
+  final String awards;
+  final String imdbRating;
   bool isWatched;
   bool isFav;
   bool expand;
@@ -24,15 +24,15 @@ class Movie {
     required this.genre,
     required this.image,
     required this.year,
-    this.released,
-    this.runtime,
-    this.director,
-    this.writer,
-    this.actors,
-    this.language,
-    this.country,
-    this.awards,
-    this.imdbRating,
+    required this.released,
+    required this.runtime,
+    required this.director,
+    required this.writer,
+    required this.actors,
+    required this.language,
+    required this.country,
+    required this.awards,
+    required this.imdbRating,
     required this.isWatched,
     required this.isFav,
     this.expand = false,
@@ -67,19 +67,18 @@ class Movie {
       genre: map['Genre'] as String,
       image: map['Poster'] as String,
       year: map['Year'] as String,
-      released: map['Released'] != null ? map['Released'] as String : null,
-      runtime: map['Runtime'] != null ? map['Runtime'] as String : null,
-      director: map['director'] != null ? map['director'] as String : null,
-      writer: map['Writer'] != null ? map['Writer'] as String : null,
-      actors: map['Actors'] != null ? map['Actors'] as String : null,
-      language: map['Language'] != null ? map['Language'] as String : null,
-      country: map['Country'] != null ? map['Country'] as String : null,
-      awards: map['Awards'] != null ? map['Awards'] as String : null,
-      imdbRating:
-          map['imdbRating'] != null ? map['imdbRating'] as String : null,
-      isWatched: map['isWatched'] ?? false,
-      isFav: map['isFav'] ?? false,
-      expand: map['expand'] ?? false,
+      released: map['Released'] as String,
+      runtime: map['Runtime'] as String,
+      director: map['Director'] as String,
+      writer: map['Writer'] as String,
+      actors: map['Actors'] as String,
+      language: map['Language'] as String,
+      country: map['Country'] as String,
+      awards: map['Awards'] as String,
+      imdbRating: map['imdbRating'] as String,
+      isWatched: map['isWatched'] as bool,
+      isFav: map['isFav'] as bool,
+      expand: map['expand'] as bool,
     );
   }
 

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 
 import '../models/movie.dart';
@@ -19,32 +17,56 @@ class AllMoviesProvider extends ChangeNotifier {
       imdbRating: "8.4",
       isWatched: false,
       runtime: "181 min",
+      director: "Anthony Russo, Joe Russo",
+      actors: "Robert Downey Jr., Chris Evans, Mark Ruffalo",
+      expand: false,
+      language: "English",
+      country: "USA",
+      awards: "Nominated for 1 Oscar. Another 38 wins & 79 nominations.",
+      released: "26 Apr 2019",
+      writer: "Christopher Markus, Stephen McFeely",
     ),
-    Movie(
-      title: "Uncharted",
-      description:
-          "Street-smart Nathan Drake (Tom Holland) is recruited by seasoned treasure hunter Victor 'Sully' Sullivan (Mark Wahlberg) to recover a fortune amassed by Ferdinand Magellan and lost 500 years ago by the House of Moncada.",
-      genre: "Thriller",
-      imdbRating: "7.5",
-      image:
-          "https://m.media-amazon.com/images/M/MV5BMWEwNjhkYzYtNjgzYy00YTY2LThjYWYtYzViMGJkZTI4Y2MyXkEyXkFqcGdeQXVyNTM0OTY1OQ@@._V1_FMjpg_UX1000_.jpg",
-      isFav: false,
-      year: "2021",
-      isWatched: false,
-      runtime: "116 min",
-    ),
-    Movie(
-      title: "Shawshank Redemption",
-      description:
-          "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency. Chronicles the experiences of a formerly successful banker as a prisoner in the gloomy jailhouse of Shawshank after being found guilty of a crime he did not commit.",
-      genre: "Drama",
-      imdbRating: "9.3",
-      image: "https://m.media-amazon.com/images/I/71TO64qm+bL._AC_SL1099_.jpg",
-      isFav: false,
-      year: "1994",
-      isWatched: false,
-      runtime: "142 min",
-    ),
+    // Movie(
+    //   title: "Uncharted",
+    //   description:
+    //       "Street-smart Nathan Drake (Tom Holland) is recruited by seasoned treasure hunter Victor 'Sully' Sullivan (Mark Wahlberg) to recover a fortune amassed by Ferdinand Magellan and lost 500 years ago by the House of Moncada.",
+    //   genre: "Thriller",
+    //   imdbRating: "7.5",
+    //   image:
+    //       "https://m.media-amazon.com/images/M/MV5BMWEwNjhkYzYtNjgzYy00YTY2LThjYWYtYzViMGJkZTI4Y2MyXkEyXkFqcGdeQXVyNTM0OTY1OQ@@._V1_FMjpg_UX1000_.jpg",
+    //   isFav: false,
+    //   year: "2021",
+    //   isWatched: false,
+    //   runtime: "116 min",
+    //   director: "Anthony Russo, Joe Russo",
+    //   actors: "Robert Downey Jr., Chris Evans, Mark Ruffalo",
+    //   expand: false,
+    //   language: "English",
+    //   country: "USA",
+    //   awards: "Nominated for 1 Oscar. Another 38 wins & 79 nominations.",
+    //   released: "26 Apr 2019",
+    //   writer: "Christopher Markus, Stephen McFeely",
+    // ),
+    // Movie(
+    //   title: "Shawshank Redemption",
+    //   description:
+    //       "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency. Chronicles the experiences of a formerly successful banker as a prisoner in the gloomy jailhouse of Shawshank after being found guilty of a crime he did not commit.",
+    //   genre: "Drama",
+    //   imdbRating: "9.3",
+    //   image: "https://m.media-amazon.com/images/I/71TO64qm+bL._AC_SL1099_.jpg",
+    //   isFav: false,
+    //   year: "1994",
+    //   isWatched: false,
+    //   runtime: "142 min",
+    //   director: "Anthony Russo, Joe Russo",
+    //   actors: "Robert Downey Jr., Chris Evans, Mark Ruffalo",
+    //   expand: false,
+    //   language: "English",
+    //   country: "USA",
+    //   awards: "Nominated for 1 Oscar. Another 38 wins & 79 nominations.",
+    //   released: "26 Apr 2019",
+    //   writer: "Christopher Markus, Stephen McFeely",
+    // ),
   ];
 
   // get by genre
@@ -116,5 +138,65 @@ class AllMoviesProvider extends ChangeNotifier {
   void removeMovie(Movie movie) {
     _allMovies.remove(movie);
     notifyListeners();
+  }
+
+  // by title
+  List<Movie> searchMoviesByTitle(String query) {
+    return _allMovies
+        .where(
+          (movie) => movie.title.toLowerCase().contains(query.toLowerCase()),
+        )
+        .toList();
+  }
+
+  // by genre
+  List<Movie> searchMoviesByGenre(String query) {
+    return _allMovies
+        .where(
+          (movie) => movie.genre.toLowerCase().contains(query.toLowerCase()),
+        )
+        .toList();
+  }
+
+  // by year
+  List<Movie> searchMoviesByYear(String query) {
+    // cast to double
+    return _allMovies
+        .where(
+          (movie) => movie.year == query,
+        )
+        .toList();
+  }
+
+  // by rating where query >= rating
+  List<Movie> searchMoviesByRating(String query) {
+    return _allMovies
+        .where(
+          (movie) => double.parse(movie.imdbRating) >= double.parse(query),
+        )
+        .toList();
+  }
+
+  // by runtime where query <= runtime
+  List<Movie> searchMoviesByRuntime(String query) {
+    return _allMovies
+        .where(
+          (movie) => double.parse(movie.runtime) <= double.parse(query),
+        )
+        .toList();
+  }
+
+  // by cast
+  List<Movie> searchMoviesByCast(String query) {
+    try {
+      return _allMovies
+          .where(
+            (movie) => movie.actors.contains(query),
+          )
+          .toList();
+    } catch (e) {
+      // snackbar
+      return [];
+    }
   }
 }

@@ -18,36 +18,20 @@ class RatingBar extends StatelessWidget {
         right: 10,
         bottom: 10,
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Wrap(
+        spacing: 10,
         children: [
           Chip(
             label: Text("Rating: ${currentMovie.imdbRating}"),
             backgroundColor: Colors.red,
           ),
-          const SizedBox(height: 5),
-          Container(
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: Colors.black,
-                width: 1,
-              ),
-            ),
-            child: LinearProgressIndicator(
-              minHeight: 4,
-              value: double.parse(currentMovie.imdbRating ?? "0") / 10,
-              backgroundColor: Colors.grey,
-              valueColor: AlwaysStoppedAnimation<Color>(
-                double.parse(currentMovie.imdbRating ?? "0") > 6.0
-                    ? Colors.green
-                    : Colors.redAccent,
-              ),
-            ),
-          ),
-          const SizedBox(height: 5),
           Chip(
             label: Text("Duration: ${currentMovie.runtime} "),
-            backgroundColor: Colors.blue,
+            backgroundColor: Colors.red,
+          ),
+          Chip(
+            label: Text("Actors: ${currentMovie.actors} "),
+            backgroundColor: Colors.red,
           ),
         ],
       ),

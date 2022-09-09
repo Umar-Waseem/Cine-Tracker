@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:movie_app/widgets/movie_page.dart';
 
 import '../models/movie.dart';
 import '../providers/all_movies_provider.dart';
@@ -34,6 +35,8 @@ class _AllMoviesListViewScreenState extends State<AllMoviesListViewScreen> {
     super.initState();
   }
 
+  String? value;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,11 +62,47 @@ class _AllMoviesListViewScreenState extends State<AllMoviesListViewScreen> {
             child: TextField(
               decoration: InputDecoration(
                 hintText: 'Search',
-                suffixIcon: IconButton(
-                  onPressed: () {
-                    // filters the movies
-                  },
-                  icon: const Icon(Icons.filter_list_alt),
+                suffixIcon: Container(
+                  margin: const EdgeInsets.only(right: 10),
+                  child: DropdownButton(
+                    iconEnabledColor: Colors.white,
+                    elevation: 20,
+                    value: value,
+                    hint: const Text(
+                      'Filter By',
+                      style: TextStyle(color: Colors.grey, fontSize: 12),
+                    ),
+                    underline: Container(),
+                    icon: const Icon(Icons.filter_list),
+                    borderRadius: BorderRadius.circular(10),
+                    items: const [
+                      DropdownMenuItem(
+                        value: 'By Year',
+                        child: Text('Year'),
+                      ),
+                      DropdownMenuItem(
+                        value: 'By Genre',
+                        child: Text('Genre'),
+                      ),
+                      DropdownMenuItem(
+                        value: 'By Duration',
+                        child: Text('Duration'),
+                      ),
+                      DropdownMenuItem(
+                        value: 'By Rating',
+                        child: Text('Rating'),
+                      ),
+                      DropdownMenuItem(
+                        value: 'By Cast',
+                        child: Text('Cast'),
+                      ),
+                    ],
+                    onChanged: (value) {
+                      setState(() {
+                        this.value = value;
+                      });
+                    },
+                  ),
                 ),
                 prefixIcon: const Icon(Icons.search),
                 border: const OutlineInputBorder(
@@ -71,13 +110,35 @@ class _AllMoviesListViewScreenState extends State<AllMoviesListViewScreen> {
                 ),
               ),
               onChanged: (value) {
-                setState(() {
-                  filteredMovies = widget.allMoviesData.movies
-                      .where((movie) => movie.title
-                          .toLowerCase()
-                          .contains(value.toLowerCase()))
-                      .toList();
-                });
+                setState(
+                  () {
+                    switch (this.value) {
+                      case 'By Year':
+                        filteredMovies =
+                            widget.allMoviesData.searchMoviesByYear(value);
+                        break;
+                      case 'By Genre':
+                        filteredMovies =
+                            widget.allMoviesData.searchMoviesByGenre(value);
+                        break;
+                      case 'By Duration':
+                        filteredMovies =
+                            widget.allMoviesData.searchMoviesByRuntime(value);
+                        break;
+                      case 'By Rating':
+                        filteredMovies =
+                            widget.allMoviesData.searchMoviesByRating(value);
+                        break;
+                      case 'By Cast':
+                        filteredMovies =
+                            widget.allMoviesData.searchMoviesByCast(value);
+                        break;
+                      default:
+                        filteredMovies =
+                            widget.allMoviesData.searchMoviesByTitle(value);
+                    }
+                  },
+                );
               },
             ),
           ),
@@ -122,8 +183,11 @@ class _AllMoviesListViewScreenState extends State<AllMoviesListViewScreen> {
                               MaterialPageRoute(
                                 builder: (context) => MoviePageViewScreen(
                                   initalIndex: index,
-                                  children:
-                                      widget.allMoviesData.allMoviePagesList,
+                                  children: filteredMovies
+                                      .map((e) => MoviePage(
+                                            movie: e,
+                                          ))
+                                      .toList(),
                                 ),
                               ),
                             );
