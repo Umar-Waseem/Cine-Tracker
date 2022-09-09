@@ -18,6 +18,12 @@ class WatchedMoviesProvider with ChangeNotifier {
         .toList();
   }
 
+  // toggle expand
+  void toggleExpand(Movie movie) {
+    movie.expand = !movie.expand;
+    notifyListeners();
+  }
+
   // get by genre
   List<Movie> getMoviesByGenre(String genre) {
     return _watchedMovies.where((movie) => movie.genre == genre).toList();

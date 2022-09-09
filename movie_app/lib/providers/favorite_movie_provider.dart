@@ -23,6 +23,24 @@ class FavoriteMovieProvider extends ChangeNotifier {
     return _favoriteMovies;
   }
 
+  // toggle expand
+  void toggleExpand(Movie movie) {
+    movie.expand = !movie.expand;
+    notifyListeners();
+  }
+
+  // toggle watched
+  void toggleWatched(Movie movie) {
+    if (_favoriteMovies.contains(movie)) {
+      movie.isFav = false;
+      removeMovie(movie);
+    } else {
+      movie.isFav = true;
+      addMovie(movie);
+    }
+    notifyListeners();
+  }
+
   // get by genre
   List<Movie> getMoviesByGenre(String genre) {
     return _favoriteMovies.where((movie) => movie.genre == genre).toList();

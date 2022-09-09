@@ -21,7 +21,10 @@ class RatingBar extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Rating: ${currentMovie.imdbRating}"),
+          Chip(
+            label: Text("Rating: ${currentMovie.imdbRating}"),
+            backgroundColor: Colors.red,
+          ),
           const SizedBox(height: 5),
           Container(
             decoration: BoxDecoration(
@@ -42,7 +45,10 @@ class RatingBar extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 5),
-          Text("Duration: ${currentMovie.runtime} "),
+          Chip(
+            label: Text("Duration: ${currentMovie.runtime} "),
+            backgroundColor: Colors.blue,
+          ),
         ],
       ),
     );

@@ -46,7 +46,7 @@ class _MainPageState extends State<MainPage> {
         bottomSheet: const TabBar(
           unselectedLabelColor: Colors.white,
           indicatorColor: Colors.red,
-          padding: EdgeInsets.all(10),
+          // padding: EdgeInsets.all(10),
           tabs: [
             Tab(
               icon: Icon(Icons.check),
