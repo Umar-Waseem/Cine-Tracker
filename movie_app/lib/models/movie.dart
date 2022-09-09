@@ -17,6 +17,7 @@ class Movie {
   String? imdbRating;
   bool isWatched;
   bool isFav;
+  bool expand;
   Movie({
     required this.title,
     required this.description,
@@ -34,6 +35,7 @@ class Movie {
     this.imdbRating,
     required this.isWatched,
     required this.isFav,
+    this.expand = false,
   });
 
   Map<String, dynamic> toMap() {
@@ -54,6 +56,7 @@ class Movie {
       'imdbRating': imdbRating,
       'isWatched': isWatched,
       'isFav': isFav,
+      'expand': expand,
     };
   }
 
@@ -76,6 +79,7 @@ class Movie {
           map['imdbRating'] != null ? map['imdbRating'] as String : null,
       isWatched: map['isWatched'] ?? false,
       isFav: map['isFav'] ?? false,
+      expand: map['expand'] ?? false,
     );
   }
 

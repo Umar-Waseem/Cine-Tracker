@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import '../providers/all_movies_provider.dart';
 import '../providers/favorite_movie_provider.dart';
 import '../providers/watched_movies_provider.dart';
-import 'add_movie_screen.dart';
 import 'all_movies_list_view_screen.dart';
 import 'fav_movies_list_view_screen.dart';
 import 'watched_movies_list_view_screen.dart';
@@ -17,32 +16,49 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  final controller = PageController(initialPage: 1);
+  // final controller = TabController();
   @override
   Widget build(BuildContext context) {
     final allMoviesData = Provider.of<AllMoviesProvider>(context);
     final favMoviesData = Provider.of<FavoriteMovieProvider>(context);
     final watchedMoviesData = Provider.of<WatchedMoviesProvider>(context);
-    return Scaffold(
-      
-      backgroundColor: Colors.black,
-      body: PageView(
-        scrollDirection: Axis.horizontal,
-        controller: controller,
-        children: [
-          WatchedMoviesListViewScreen(
-            watchedMoviesData: watchedMoviesData,
-            favMoviesData: favMoviesData,
-          ),
-          AllMoviesListViewScreen(
-            watchedMoviesData: watchedMoviesData,
-            allMoviesData: allMoviesData,
-            favMoviesData: favMoviesData,
-          ),
-          FavroiteMoviesListViewScreen(
-            favMoviesData: favMoviesData,
-          ),
-        ],
+    return DefaultTabController(
+      length: 3,
+      initialIndex: 1,
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        body: TabBarView(
+          children: [
+            WatchedMoviesListViewScreen(
+              watchedMoviesData: watchedMoviesData,
+              favMoviesData: favMoviesData,
+            ),
+            AllMoviesListViewScreen(
+              watchedMoviesData: watchedMoviesData,
+              allMoviesData: allMoviesData,
+              favMoviesData: favMoviesData,
+            ),
+            FavroiteMoviesListViewScreen(
+              favMoviesData: favMoviesData,
+            ),
+          ],
+        ),
+        bottomSheet: const TabBar(
+          unselectedLabelColor: Colors.white,
+          indicatorColor: Colors.red,
+          padding: EdgeInsets.all(10),
+          tabs: [
+            Tab(
+              icon: Icon(Icons.check),
+            ),
+            Tab(
+              icon: Icon(Icons.movie),
+            ),
+            Tab(
+              icon: Icon(Icons.favorite),
+            ),
+          ],
+        ),
       ),
     );
   }
