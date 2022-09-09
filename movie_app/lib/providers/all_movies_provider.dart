@@ -65,23 +65,8 @@ class AllMoviesProvider extends ChangeNotifier {
     return genres;
   }
 
-  List<Movie> allMovies(List<String> genres) {
-    if (genres.isEmpty) {
-      return _allMovies;
-    } else {
-      int i = 0;
-      log("provider recieved: ");
-      for (var element in genres) {
-        print("$i $element");
-      }
-      return availableGenres
-          .where((genre) => genres.contains(genre))
-          .map((genre) =>
-              _allMovies.where((movie) => movie.genre.contains(genre)).toList())
-          .expand((element) => element)
-          .toList();
-    }
-  }
+  // get all movies
+  List<Movie> get movies => _allMovies;
 
   List<MoviePage> get allMoviePagesList {
     return _allMovies.map(
@@ -106,6 +91,16 @@ class AllMoviesProvider extends ChangeNotifier {
         )
         .toList();
   }
+
+  // search movies with different criteria
+  // List<Movie> searchMovies(String query) {
+  //   return _allMovies
+  //       .where(
+  //         (movie) => movie.title.toLowerCase().contains(query.toLowerCase()),
+  //       )
+  //       .toList();
+
+  // }
 
   // toggle expand
   void toggleExpand(Movie movie) {

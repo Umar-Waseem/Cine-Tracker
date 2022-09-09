@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -29,7 +27,6 @@ class AllMoviesListViewScreen extends StatefulWidget {
 }
 
 class _AllMoviesListViewScreenState extends State<AllMoviesListViewScreen> {
-  final List<String> moviesToShow = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,47 +47,28 @@ class _AllMoviesListViewScreenState extends State<AllMoviesListViewScreen> {
       ),
       body: Column(
         children: [
-          Wrap(
-            children: [
-              ...widget.allMoviesData.availableGenres.map((e) {
-                log("availableGenres: $e");
-                return Container(
-                  margin: const EdgeInsets.all(5),
-                  child: FilterChip(
-                    pressElevation: 30,
-                    checkmarkColor: Colors.white,
-                    selectedColor: Colors.red,
-                    label: Text(e),
-                    selected: moviesToShow.contains(e),
-                    onSelected: (value) {
-                      setState(() {
-                        if (value) {
-                          moviesToShow.add(e.trim());
-                          log("added $e");
-                          log("moviesToShow lenght: ${moviesToShow.length}");
-                        } else {
-                          moviesToShow.remove(e);
-                          log("removed $e");
-                          log("moviesToShow lenght: ${moviesToShow.length}");
-                        }
-                      });
-                    },
-                  ),
-                );
-              })
-            ],
+          Container(
+            margin: const EdgeInsets.all(15),
+            child: TextField(
+              decoration: InputDecoration(
+                hintText: 'Search',
+                suffixIcon: IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.filter_list_alt),
+                ),
+                prefixIcon: const Icon(Icons.search),
+                border: const OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                ),
+              ),
+            ),
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: widget.allMoviesData.allMovies(moviesToShow).length,
+              itemCount: widget.allMoviesData.movies.length,
               itemBuilder: (context, index) {
-                Movie currentMovie =
-                    widget.allMoviesData.allMovies(moviesToShow)[index];
-                // log moviesToShow
-                log("movies to show length: ${moviesToShow.length}");
-                for (var i = 0; i < moviesToShow.length; i++) {
-                  log(moviesToShow[i]);
-                }
+                Movie currentMovie = widget.allMoviesData.movies[index];
+
                 return Card(
                   margin: const EdgeInsets.only(
                       top: 10, bottom: 10, left: 10, right: 10),

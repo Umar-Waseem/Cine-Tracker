@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 import '../models/movie.dart';
 import '../providers/favorite_movie_provider.dart';
+import '../providers/watched_movies_provider.dart';
 import '../widgets/rating_bar.dart';
-import 'add_movie_screen.dart';
 import 'movies_page_view_screen.dart';
 
 class FavroiteMoviesListViewScreen extends StatefulWidget {
@@ -12,10 +12,12 @@ class FavroiteMoviesListViewScreen extends StatefulWidget {
     Key? key,
     // required this.allMoviesData,
     required this.favMoviesData,
+    required this.watchedMoviesData,
   }) : super(key: key);
 
   // final AllMoviesProvider allMoviesData;
   final FavoriteMovieProvider favMoviesData;
+  final WatchedMoviesProvider watchedMoviesData;
 
   @override
   State<FavroiteMoviesListViewScreen> createState() =>
@@ -29,7 +31,6 @@ class _FavroiteMoviesListViewScreenState
     return Scaffold(
       appBar: AppBar(
         title: const Text('Favorite Movies'),
-       
       ),
       body: ListView.builder(
         itemCount: widget.favMoviesData.favoriteMovies.length,
@@ -126,7 +127,7 @@ class _FavroiteMoviesListViewScreenState
                           ),
                           IconButton(
                             onPressed: () {
-                              widget.favMoviesData.toggleWatched(currentMovie);
+                              widget.watchedMoviesData.toggleWatched(currentMovie);
                               // snackbar
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(

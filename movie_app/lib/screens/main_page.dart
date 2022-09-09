@@ -40,6 +40,7 @@ class _MainPageState extends State<MainPage> {
             ),
             FavroiteMoviesListViewScreen(
               favMoviesData: favMoviesData,
+              watchedMoviesData: watchedMoviesData,
             ),
           ],
         ),

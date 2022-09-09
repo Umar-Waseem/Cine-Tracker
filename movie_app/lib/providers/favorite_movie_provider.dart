@@ -29,17 +29,7 @@ class FavoriteMovieProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // toggle watched
-  void toggleWatched(Movie movie) {
-    if (_favoriteMovies.contains(movie)) {
-      movie.isFav = false;
-      removeMovie(movie);
-    } else {
-      movie.isFav = true;
-      addMovie(movie);
-    }
-    notifyListeners();
-  }
+
 
   // get by genre
   List<Movie> getMoviesByGenre(String genre) {
