@@ -27,6 +27,13 @@ class AllMoviesListViewScreen extends StatefulWidget {
 }
 
 class _AllMoviesListViewScreenState extends State<AllMoviesListViewScreen> {
+  late List<Movie> filteredMovies;
+  @override
+  void initState() {
+    filteredMovies = widget.allMoviesData.movies;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,7 +60,9 @@ class _AllMoviesListViewScreenState extends State<AllMoviesListViewScreen> {
               decoration: InputDecoration(
                 hintText: 'Search',
                 suffixIcon: IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    // filters the movies
+                  },
                   icon: const Icon(Icons.filter_list_alt),
                 ),
                 prefixIcon: const Icon(Icons.search),
@@ -61,14 +70,21 @@ class _AllMoviesListViewScreenState extends State<AllMoviesListViewScreen> {
                   borderRadius: BorderRadius.all(Radius.circular(20)),
                 ),
               ),
+              onChanged: (value) {
+                setState(() {
+                  filteredMovies = widget.allMoviesData.movies
+                      .where((movie) => movie.title
+                          .toLowerCase()
+                          .contains(value.toLowerCase()))
+                      .toList();
+                });
+              },
             ),
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: widget.allMoviesData.movies.length,
+              itemCount: filteredMovies.length,
               itemBuilder: (context, index) {
-                Movie currentMovie = widget.allMoviesData.movies[index];
-
                 return Card(
                   margin: const EdgeInsets.only(
                       top: 10, bottom: 10, left: 10, right: 10),
@@ -93,7 +109,7 @@ class _AllMoviesListViewScreenState extends State<AllMoviesListViewScreen> {
                     onDismissed: (direction) {
                       // on left direction
                       if (direction == DismissDirection.endToStart) {
-                        widget.allMoviesData.removeMovie(currentMovie);
+                        widget.allMoviesData.removeMovie(filteredMovies[index]);
                       }
                     },
                     key: UniqueKey(),
@@ -117,7 +133,7 @@ class _AllMoviesListViewScreenState extends State<AllMoviesListViewScreen> {
                             leading: Hero(
                               tag: index,
                               child: CachedNetworkImage(
-                                imageUrl: currentMovie.image,
+                                imageUrl: filteredMovies[index].image,
                                 placeholder: (context, url) =>
                                     const CircleAvatar(),
                                 errorWidget: (context, url, error) =>
@@ -125,10 +141,10 @@ class _AllMoviesListViewScreenState extends State<AllMoviesListViewScreen> {
                               ),
                             ),
                             title: Text(
-                              "${currentMovie.title} - (${currentMovie.year})",
+                              "${filteredMovies[index].title} - (${filteredMovies[index].year})",
                             ),
                             subtitle: Text(
-                              currentMovie.genre.toString(),
+                              filteredMovies[index].genre.toString(),
                             ),
                             trailing: Row(
                               mainAxisSize: MainAxisSize.min,
@@ -136,17 +152,18 @@ class _AllMoviesListViewScreenState extends State<AllMoviesListViewScreen> {
                                 IconButton(
                                   onPressed: () {
                                     widget.favMoviesData
-                                        .toggleFavorite(currentMovie);
+                                        .toggleFavorite(filteredMovies[index]);
                                     // snackbar
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
-                                        backgroundColor: currentMovie.isFav
-                                            ? Colors.green
-                                            : Colors.red,
+                                        backgroundColor:
+                                            filteredMovies[index].isFav
+                                                ? Colors.green
+                                                : Colors.red,
                                         behavior: SnackBarBehavior.floating,
                                         margin: const EdgeInsets.all(10),
                                         content: Text(
-                                          currentMovie.isFav
+                                          filteredMovies[index].isFav
                                               ? 'Added to favorites'
                                               : 'Removed from favorites',
                                           style: const TextStyle(
@@ -157,7 +174,7 @@ class _AllMoviesListViewScreenState extends State<AllMoviesListViewScreen> {
                                     );
                                   },
                                   icon: Icon(
-                                    currentMovie.isFav
+                                    filteredMovies[index].isFav
                                         ? Icons.favorite_outlined
                                         : Icons.favorite_border,
                                     color: Colors.red,
@@ -166,17 +183,18 @@ class _AllMoviesListViewScreenState extends State<AllMoviesListViewScreen> {
                                 IconButton(
                                   onPressed: () {
                                     widget.watchedMoviesData
-                                        .toggleWatched(currentMovie);
+                                        .toggleWatched(filteredMovies[index]);
                                     // snackbar
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
-                                        backgroundColor: currentMovie.isWatched
-                                            ? Colors.green
-                                            : Colors.red,
+                                        backgroundColor:
+                                            filteredMovies[index].isWatched
+                                                ? Colors.green
+                                                : Colors.red,
                                         behavior: SnackBarBehavior.floating,
                                         margin: const EdgeInsets.all(10),
                                         content: Text(
-                                          currentMovie.isWatched
+                                          filteredMovies[index].isWatched
                                               ? 'Added to watched'
                                               : 'Removed from watched',
                                           style: const TextStyle(
@@ -187,7 +205,7 @@ class _AllMoviesListViewScreenState extends State<AllMoviesListViewScreen> {
                                     );
                                   },
                                   icon: Icon(
-                                    currentMovie.isWatched
+                                    filteredMovies[index].isWatched
                                         ? Icons.check_circle_rounded
                                         : Icons.check_circle_outlined,
                                     color: Colors.green,
@@ -197,23 +215,24 @@ class _AllMoviesListViewScreenState extends State<AllMoviesListViewScreen> {
                             ),
                           ),
                         ),
-                        // RatingBar(currentMovie: currentMovie),
-                        !currentMovie.expand
+                        // RatingBar(filteredMovies[index]: filteredMovies[index]),
+                        !filteredMovies[index].expand
                             ? InkWell(
                                 onTap: () {
                                   widget.allMoviesData
-                                      .toggleExpand(currentMovie);
+                                      .toggleExpand(filteredMovies[index]);
                                 },
                                 child:
                                     const Icon(Icons.arrow_drop_down_rounded),
                               )
                             : Column(
                                 children: [
-                                  RatingBar(currentMovie: currentMovie),
+                                  RatingBar(
+                                      currentMovie: filteredMovies[index]),
                                   InkWell(
                                     onTap: () {
                                       widget.allMoviesData
-                                          .toggleExpand(currentMovie);
+                                          .toggleExpand(filteredMovies[index]);
                                     },
                                     child:
                                         const Icon(Icons.arrow_drop_up_rounded),

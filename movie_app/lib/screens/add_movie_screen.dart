@@ -144,6 +144,15 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
                     trailing: IconButton(
                       onPressed: () {
                         data.addMovie(movie!);
+                        // show snackbar
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                              "Movie Added",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        );
                         Navigator.of(context).pop();
                       },
                       icon: const Icon(Icons.add),
