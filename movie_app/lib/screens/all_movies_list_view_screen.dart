@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_app/widgets/movie_page.dart';
 
@@ -77,6 +76,10 @@ class _AllMoviesListViewScreenState extends State<AllMoviesListViewScreen> {
                     borderRadius: BorderRadius.circular(10),
                     items: const [
                       DropdownMenuItem(
+                        value: 'title',
+                        child: Text('Title'),
+                      ),
+                      DropdownMenuItem(
                         value: 'By Year',
                         child: Text('Year'),
                       ),
@@ -113,6 +116,10 @@ class _AllMoviesListViewScreenState extends State<AllMoviesListViewScreen> {
                 setState(
                   () {
                     switch (this.value) {
+                      case "By Title":
+                        filteredMovies =
+                            widget.allMoviesData.searchMoviesByTitle(value);
+                        break;
                       case 'By Year':
                         filteredMovies =
                             widget.allMoviesData.searchMoviesByYear(value);
@@ -184,9 +191,11 @@ class _AllMoviesListViewScreenState extends State<AllMoviesListViewScreen> {
                                 builder: (context) => MoviePageViewScreen(
                                   initalIndex: index,
                                   children: filteredMovies
-                                      .map((e) => MoviePage(
-                                            movie: e,
-                                          ))
+                                      .map(
+                                        (e) => MoviePage(
+                                          movie: e,
+                                        ),
+                                      )
                                       .toList(),
                                 ),
                               ),
@@ -196,12 +205,11 @@ class _AllMoviesListViewScreenState extends State<AllMoviesListViewScreen> {
                             contentPadding: const EdgeInsets.all(10),
                             leading: Hero(
                               tag: index,
-                              child: CachedNetworkImage(
-                                imageUrl: filteredMovies[index].image,
-                                placeholder: (context, url) =>
-                                    const CircleAvatar(),
-                                errorWidget: (context, url, error) =>
-                                    const Icon(Icons.error),
+                              child: Image.network(
+                                filteredMovies[index].image,
+                                fit: BoxFit.cover,
+                                height: 120,
+                                width: 50,
                               ),
                             ),
                             title: Text(

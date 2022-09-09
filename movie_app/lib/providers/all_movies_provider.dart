@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 import '../models/movie.dart';
@@ -151,30 +153,48 @@ class AllMoviesProvider extends ChangeNotifier {
 
   // by genre
   List<Movie> searchMoviesByGenre(String query) {
-    return _allMovies
-        .where(
-          (movie) => movie.genre.toLowerCase().contains(query.toLowerCase()),
-        )
-        .toList();
+    try {
+      return _allMovies
+          .where(
+            (movie) => movie.genre.toLowerCase().contains(query.toLowerCase()),
+          )
+          .toList();
+    } catch (e) {
+      return [];
+    }
   }
 
   // by year
   List<Movie> searchMoviesByYear(String query) {
     // cast to double
-    return _allMovies
-        .where(
-          (movie) => movie.year == query,
-        )
-        .toList();
+    try {
+      double value = double.parse(query);
+      return _allMovies.where(
+        (movie) {
+          double year = double.parse(movie.year);
+
+          return value == year;
+        },
+      ).toList();
+    } catch (e) {
+      log(e.toString());
+      return [];
+    }
   }
 
   // by rating where query >= rating
   List<Movie> searchMoviesByRating(String query) {
-    return _allMovies
-        .where(
-          (movie) => double.parse(movie.imdbRating) >= double.parse(query),
-        )
-        .toList();
+    try {
+      // cast to double
+      double rating = double.parse(query);
+      return _allMovies
+          .where(
+            (movie) => double.parse(movie.imdbRating).floorToDouble() <= rating,
+          )
+          .toList();
+    } catch (e) {
+      return [];
+    }
   }
 
   // by runtime where query <= runtime
@@ -191,7 +211,7 @@ class AllMoviesProvider extends ChangeNotifier {
     try {
       return _allMovies
           .where(
-            (movie) => movie.actors.contains(query),
+            (movie) => movie.actors.toLowerCase().contains(query.toLowerCase()),
           )
           .toList();
     } catch (e) {
