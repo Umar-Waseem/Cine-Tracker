@@ -3,6 +3,10 @@
 A movie app made using Flutter an sqflite local database. Here you can maintain your movie watchlist, your favorite movies and your seen movies.
 This app is also a great way to learn/example of API fetching and making and displaying models of it.
 
+## Developer:
+
+<a href="https://github.com/Umar-Waseem">Umar Waseem</a>
+
 ## Features:
 - WatchList Movies / Series
 - Favorite Movies
