@@ -12,6 +12,7 @@ This app is also a great way to learn/example of API fetching and making and dis
 - Favorite Movies
 - Seen Movies
 - Add New Movies
+- Filtered Search Movies
 
 ## Upcoming Features
 - Watch Movie Trailer
