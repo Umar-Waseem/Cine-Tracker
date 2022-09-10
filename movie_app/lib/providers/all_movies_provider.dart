@@ -156,10 +156,7 @@ class AllMoviesProvider extends ChangeNotifier {
     try {
       return _allMovies
           .where(
-            (movie) => movie.genre
-                .split(",")[0]
-                .toLowerCase()
-                .contains(query.toLowerCase()),
+            (movie) => movie.genre.toLowerCase().contains(query.toLowerCase()),
           )
           .toList();
     } catch (e) {
