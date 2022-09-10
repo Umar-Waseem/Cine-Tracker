@@ -18,6 +18,17 @@ This app is also a great way to learn/example of API fetching and making and dis
 ## Api Used:
 https://www.omdbapi.com/
 
+## State Management:
+
+- provider: ^6.0.3
+
+## Packages Used:
+
+- cupertino_icons: ^1.0.2
+- provider: ^6.0.3
+- http: ^0.13.5
+- cached_network_image: ^3.2.2
+
 ## Screenshots:
 <p>
 <img src="1.png" height=600 width=300>
