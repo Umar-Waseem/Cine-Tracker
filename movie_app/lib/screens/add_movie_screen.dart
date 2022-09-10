@@ -25,37 +25,25 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
   Movie? movie;
 
   void sendApiRequestByTitle(String text) async {
-    try {
+    setState(() {
+      loading = true;
+    });
+    String searchResult = text;
+    final response = await http
+        .get(
+      Uri.parse("https://www.omdbapi.com/?t=$searchResult&apikey=$apiKey"),
+    )
+        .then((value) {
       setState(() {
-        loading = true;
+        loading = false;
       });
-      String searchResult = text;
-      final response = await http
-          .get(
-        Uri.parse("https://www.omdbapi.com/?t=$searchResult&apikey=$apiKey"),
-      )
-          .then((value) {
-        setState(() {
-          loading = false;
-        });
-        return value;
-      });
-      // print(response.body);
+      return value;
+    });
+    print(response.body);
 
-      // make movie model from response
-      movie = Movie.fromJson(response.body);
-      print("movie$movie");
-    } catch (e) {
-      // show snackbar
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            e.toString(),
-            style: const TextStyle(color: Colors.white),
-          ),
-        ),
-      );
-    }
+    // make movie model from response
+    movie = Movie.fromJson(response.body);
+    print("movie ${movie.toString()}");
   }
 
   // void sendApiRequestById(String text) async {
@@ -132,7 +120,10 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
                           builder: (context) => MoviePageViewScreen(
                             initalIndex: 0,
                             children: [
-                              MoviePage(movie: movie!),
+                              MoviePage(
+                                movie: movie!,
+                                showIcon: false,
+                              ),
                             ],
                           ),
                         ),

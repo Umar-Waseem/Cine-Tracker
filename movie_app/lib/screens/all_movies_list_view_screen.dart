@@ -28,6 +28,7 @@ class AllMoviesListViewScreen extends StatefulWidget {
 
 class _AllMoviesListViewScreenState extends State<AllMoviesListViewScreen> {
   late List<Movie> filteredMovies;
+  final TextEditingController _searchController = TextEditingController();
   @override
   void initState() {
     filteredMovies = widget.allMoviesData.movies;
@@ -59,52 +60,72 @@ class _AllMoviesListViewScreenState extends State<AllMoviesListViewScreen> {
           Container(
             margin: const EdgeInsets.all(15),
             child: TextField(
+              controller: _searchController,
               decoration: InputDecoration(
                 hintText: 'Search',
                 suffixIcon: Container(
                   margin: const EdgeInsets.only(right: 10),
-                  child: DropdownButton(
-                    iconEnabledColor: Colors.white,
-                    elevation: 20,
-                    value: value,
-                    hint: const Text(
-                      'Filter By',
-                      style: TextStyle(color: Colors.grey, fontSize: 12),
-                    ),
-                    underline: Container(),
-                    icon: const Icon(Icons.filter_list),
-                    borderRadius: BorderRadius.circular(10),
-                    items: const [
-                      DropdownMenuItem(
-                        value: 'title',
-                        child: Text('Title'),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          // clear filters and text fields
+                          setState(() {
+                            filteredMovies = widget.allMoviesData.movies;
+                            value = null;
+                            _searchController.clear();
+                          });
+                        },
+                        icon: const Icon(Icons.close, size: 18),
                       ),
-                      DropdownMenuItem(
-                        value: 'By Year',
-                        child: Text('Year'),
-                      ),
-                      DropdownMenuItem(
-                        value: 'By Genre',
-                        child: Text('Genre'),
-                      ),
-                      DropdownMenuItem(
-                        value: 'By Duration',
-                        child: Text('Duration'),
-                      ),
-                      DropdownMenuItem(
-                        value: 'By Rating',
-                        child: Text('Rating'),
-                      ),
-                      DropdownMenuItem(
-                        value: 'By Cast',
-                        child: Text('Cast'),
+                      DropdownButton(
+                        iconEnabledColor: Colors.white,
+                        elevation: 20,
+                        value: value,
+                        hint: const Text(
+                          'Filter By',
+                          style: TextStyle(color: Colors.grey, fontSize: 12),
+                        ),
+                        underline: Container(),
+                        icon: const Icon(
+                          Icons.filter_list,
+                          size: 18,
+                        ),
+                        borderRadius: BorderRadius.circular(10),
+                        items: const [
+                          DropdownMenuItem(
+                            value: 'title',
+                            child: Text('Title'),
+                          ),
+                          DropdownMenuItem(
+                            value: 'By Year',
+                            child: Text('Year'),
+                          ),
+                          DropdownMenuItem(
+                            value: 'By Genre',
+                            child: Text('Genre'),
+                          ),
+                          DropdownMenuItem(
+                            value: 'By Duration',
+                            child: Text('Duration'),
+                          ),
+                          DropdownMenuItem(
+                            value: 'By Rating',
+                            child: Text('Rating'),
+                          ),
+                          DropdownMenuItem(
+                            value: 'By Cast',
+                            child: Text('Cast'),
+                          ),
+                        ],
+                        onChanged: (value) {
+                          setState(() {
+                            this.value = value;
+                          });
+                        },
                       ),
                     ],
-                    onChanged: (value) {
-                      setState(() {
-                        this.value = value;
-                      });
-                    },
                   ),
                 ),
                 prefixIcon: const Icon(Icons.search),

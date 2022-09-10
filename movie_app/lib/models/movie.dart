@@ -33,8 +33,8 @@ class Movie {
     required this.country,
     required this.awards,
     required this.imdbRating,
-    required this.isWatched,
-    required this.isFav,
+    this.isWatched = false,
+    this.isFav = false,
     this.expand = false,
   });
 
@@ -76,9 +76,9 @@ class Movie {
       country: map['Country'] as String,
       awards: map['Awards'] as String,
       imdbRating: map['imdbRating'] as String,
-      isWatched: map['isWatched'] as bool,
-      isFav: map['isFav'] as bool,
-      expand: map['expand'] as bool,
+      // isWatched: map['isWatched'] as bool,
+      // isFav: map['isFav'] as bool,
+      // expand: map['expand'] as bool,
     );
   }
 

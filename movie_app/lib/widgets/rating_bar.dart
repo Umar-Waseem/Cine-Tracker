@@ -22,19 +22,19 @@ class RatingBar extends StatelessWidget {
         spacing: 10,
         children: [
           Chip(
+            avatar: const Icon(
+              Icons.star,
+              color: Colors.yellow,
+            ),
             label: Text("Rating: ${currentMovie.imdbRating}"),
             backgroundColor: Colors.black,
           ),
           Chip(
+            avatar: const Icon(
+              Icons.timelapse_sharp,
+              color: Colors.white,
+            ),
             label: Text("Duration: ${currentMovie.runtime} "),
-            backgroundColor: Colors.black,
-          ),
-          Chip(
-            label: Text("Actors: ${currentMovie.actors} "),
-            backgroundColor: Colors.black,
-          ),
-          Chip(
-            label: Text("Director: ${currentMovie.director} "),
             backgroundColor: Colors.black,
           ),
         ],

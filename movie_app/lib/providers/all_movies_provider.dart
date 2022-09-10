@@ -28,47 +28,47 @@ class AllMoviesProvider extends ChangeNotifier {
       released: "26 Apr 2019",
       writer: "Christopher Markus, Stephen McFeely",
     ),
-    // Movie(
-    //   title: "Uncharted",
-    //   description:
-    //       "Street-smart Nathan Drake (Tom Holland) is recruited by seasoned treasure hunter Victor 'Sully' Sullivan (Mark Wahlberg) to recover a fortune amassed by Ferdinand Magellan and lost 500 years ago by the House of Moncada.",
-    //   genre: "Thriller",
-    //   imdbRating: "7.5",
-    //   image:
-    //       "https://m.media-amazon.com/images/M/MV5BMWEwNjhkYzYtNjgzYy00YTY2LThjYWYtYzViMGJkZTI4Y2MyXkEyXkFqcGdeQXVyNTM0OTY1OQ@@._V1_FMjpg_UX1000_.jpg",
-    //   isFav: false,
-    //   year: "2021",
-    //   isWatched: false,
-    //   runtime: "116 min",
-    //   director: "Anthony Russo, Joe Russo",
-    //   actors: "Robert Downey Jr., Chris Evans, Mark Ruffalo",
-    //   expand: false,
-    //   language: "English",
-    //   country: "USA",
-    //   awards: "Nominated for 1 Oscar. Another 38 wins & 79 nominations.",
-    //   released: "26 Apr 2019",
-    //   writer: "Christopher Markus, Stephen McFeely",
-    // ),
-    // Movie(
-    //   title: "Shawshank Redemption",
-    //   description:
-    //       "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency. Chronicles the experiences of a formerly successful banker as a prisoner in the gloomy jailhouse of Shawshank after being found guilty of a crime he did not commit.",
-    //   genre: "Drama",
-    //   imdbRating: "9.3",
-    //   image: "https://m.media-amazon.com/images/I/71TO64qm+bL._AC_SL1099_.jpg",
-    //   isFav: false,
-    //   year: "1994",
-    //   isWatched: false,
-    //   runtime: "142 min",
-    //   director: "Anthony Russo, Joe Russo",
-    //   actors: "Robert Downey Jr., Chris Evans, Mark Ruffalo",
-    //   expand: false,
-    //   language: "English",
-    //   country: "USA",
-    //   awards: "Nominated for 1 Oscar. Another 38 wins & 79 nominations.",
-    //   released: "26 Apr 2019",
-    //   writer: "Christopher Markus, Stephen McFeely",
-    // ),
+    Movie(
+      title: "Uncharted",
+      description:
+          "Street-smart Nathan Drake (Tom Holland) is recruited by seasoned treasure hunter Victor 'Sully' Sullivan (Mark Wahlberg) to recover a fortune amassed by Ferdinand Magellan and lost 500 years ago by the House of Moncada.",
+      genre: "Thriller",
+      imdbRating: "7.5",
+      image:
+          "https://m.media-amazon.com/images/M/MV5BMWEwNjhkYzYtNjgzYy00YTY2LThjYWYtYzViMGJkZTI4Y2MyXkEyXkFqcGdeQXVyNTM0OTY1OQ@@._V1_FMjpg_UX1000_.jpg",
+      isFav: false,
+      year: "2021",
+      isWatched: false,
+      runtime: "116 min",
+      director: "Anthony Russo, Joe Russo",
+      actors: "Robert Downey Jr., Chris Evans, Mark Ruffalo",
+      expand: false,
+      language: "English",
+      country: "USA",
+      awards: "Nominated for 1 Oscar. Another 38 wins & 79 nominations.",
+      released: "26 Apr 2019",
+      writer: "Christopher Markus, Stephen McFeely",
+    ),
+    Movie(
+      title: "Shawshank Redemption",
+      description:
+          "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency. Chronicles the experiences of a formerly successful banker as a prisoner in the gloomy jailhouse of Shawshank after being found guilty of a crime he did not commit.",
+      genre: "Drama",
+      imdbRating: "9.3",
+      image: "https://m.media-amazon.com/images/I/71TO64qm+bL._AC_SL1099_.jpg",
+      isFav: false,
+      year: "1994",
+      isWatched: false,
+      runtime: "142 min",
+      director: "Anthony Russo, Joe Russo",
+      actors: "Robert Downey Jr., Chris Evans, Mark Ruffalo",
+      expand: false,
+      language: "English",
+      country: "USA",
+      awards: "Nominated for 1 Oscar. Another 38 wins & 79 nominations.",
+      released: "26 Apr 2019",
+      writer: "Christopher Markus, Stephen McFeely",
+    ),
   ];
 
   // get by genre
@@ -156,7 +156,10 @@ class AllMoviesProvider extends ChangeNotifier {
     try {
       return _allMovies
           .where(
-            (movie) => movie.genre.toLowerCase().contains(query.toLowerCase()),
+            (movie) => movie.genre
+                .split(",")[0]
+                .toLowerCase()
+                .contains(query.toLowerCase()),
           )
           .toList();
     } catch (e) {
