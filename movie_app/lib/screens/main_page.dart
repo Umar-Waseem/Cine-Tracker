@@ -44,20 +44,18 @@ class _MainPageState extends State<MainPage> {
             ),
           ],
         ),
-        bottomSheet: TabBar(
+        bottomNavigationBar: const TabBar(
           unselectedLabelColor: Colors.white,
           indicatorColor: Colors.red,
           // padding: EdgeInsets.all(10),
           tabs: [
-            Container(
-              child: const Tab(
-                icon: Icon(Icons.check),
-              ),
+            Tab(
+              icon: Icon(Icons.check),
             ),
-            const Tab(
+            Tab(
               icon: Icon(Icons.movie),
             ),
-            const Tab(
+            Tab(
               icon: Icon(Icons.favorite),
             ),
           ],
